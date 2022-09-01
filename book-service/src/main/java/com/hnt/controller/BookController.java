@@ -1,10 +1,15 @@
 package com.hnt.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,18 +33,27 @@ public class BookController extends BaseController {
 	AuthorService authorService;
 
 	@GetMapping("/books/search")
-	ArrayList<Book> getBooks(@PathVariable("category") String category, @PathVariable("author") String Author,
-			@PathVariable("price") int price, @PathVariable("publisher") String publisher) {
-		Iterable<Book> bookList = bookService.getBooks();
-		ArrayList<Book> result = new ArrayList<>();
-		for (Book b : bookList) {
-			if (b.getCategory().equalsIgnoreCase(category) || b.getAuthor().equalsIgnoreCase(Author)
-					|| b.getPrice() == price || b.getPublisher().equalsIgnoreCase(publisher)) {
-				result.add(b);
-			}
+	List<Book> getBooks(HttpServletRequest req, HttpServletResponse res) {
+		String category = req.getParameter("category");
+		String author = req.getParameter("author");
+		int price = Integer.valueOf(req.getParameter("price"));
+		String publisher = req.getParameter("publisher");
+
+		List<Book> bList = Streamable.of(bookService.getBooks()).toList();
+		List<Book> sortedList = null;
+
+		if (null != bList) {
+			sortedList = bList.stream()
+					.filter(b -> b.getCategory().equalsIgnoreCase(category) || b.getAuthor().equalsIgnoreCase(author)
+							|| b.getPrice() == price || b.getPublisher().equalsIgnoreCase(publisher))
+					.collect(Collectors.toList());
+		}
+		
+		if(null!= sortedList) {
+			System.out.println("not null");
 		}
 
-		return result;
+		return sortedList;
 	}
 
 	@PostMapping("/author/{authorId}/books")
