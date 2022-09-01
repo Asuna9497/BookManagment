@@ -1,0 +1,21 @@
+package com.hnt.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hnt.AuthorRepository;
+import com.hnt.entity.Author;
+
+@Service
+public class AuthorService {
+	
+	@Autowired
+	AuthorRepository authorRepository;
+	
+	Optional<Author> getAuthorById(int authId){
+		 return authorRepository.findAllById(authId);
+	}
+
+}
