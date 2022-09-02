@@ -1,6 +1,5 @@
 package com.hnt.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +21,9 @@ import com.hnt.entity.Book;
 import com.hnt.service.AuthorService;
 import com.hnt.service.BookService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/digitalbooks")
 public class BookController extends BaseController {
@@ -33,9 +35,10 @@ public class BookController extends BaseController {
 	AuthorService authorService;
 
 	@GetMapping("/books/search")
-	List<Book> getBooks(HttpServletRequest req, HttpServletResponse res) {
+	List<Book> getBooks(HttpServletRequest req, HttpServletResponse res) {		
+		log.debug("inside getBooks");
 		String category = req.getParameter("category");
-		String author = req.getParameter("author");
+		String authorName = req.getParameter("author");
 		int price = Integer.valueOf(req.getParameter("price"));
 		String publisher = req.getParameter("publisher");
 
@@ -44,26 +47,20 @@ public class BookController extends BaseController {
 
 		if (null != bList) {
 			sortedList = bList.stream()
-					.filter(b -> b.getCategory().equalsIgnoreCase(category) || b.getAuthor().equalsIgnoreCase(author)
+					.filter(b -> b.getCategory().equalsIgnoreCase(category) || b.getAuthor().getName().equalsIgnoreCase(authorName)
 							|| b.getPrice() == price || b.getPublisher().equalsIgnoreCase(publisher))
 					.collect(Collectors.toList());
 		}
 		
-		if(null!= sortedList) {
-			System.out.println("not null");
-		}
-
 		return sortedList;
 	}
 
 	@PostMapping("/author/{authorId}/books")
 	Integer saveBook(@Valid @RequestBody Book book, @PathVariable("authorId") int authorId) {
-//		Author author = authorService.getAuthorById(authorId);
-//		if (null != author) {
-//			book.setAuthor(author.getAutherName());
-//		} else {
-//			book.setAuthor("abc");
-//		}
+		Author author = authorService.getAuthorById(authorId);
+		if (null != author) {
+			book.setAuthor(author);
+		}
 		bookService.saveBook(book);
 		return book.getBookId();
 	}

@@ -18,6 +18,6 @@ public class Author {
 	private int autherId;
 	
 	@NotBlank(message = "autherName cannot be blank#######")
-	private String autherName;
+	private String name;
 
 }

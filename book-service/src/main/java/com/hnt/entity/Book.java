@@ -1,5 +1,6 @@
 package com.hnt.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -33,12 +35,12 @@ public class Book {
 	@Min(value = 1, message = "price cannot be less than 1")
 	private int price;
 	
-	private String author;
+	@ManyToOne
+	private Author author;
 	
 	@NotBlank(message = "publisher cannot be blank#######")
 	private String publisher;
 	
-	//@JsonFormat(pattern = "MM/dd/yyyy")
 	private String publishedDate;
 	
 	@NotBlank(message = "content cannot be blank#######")
