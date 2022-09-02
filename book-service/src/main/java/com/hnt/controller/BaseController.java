@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class BaseController {
-	
+
 	public BaseController() {
 		super();
 	}
@@ -28,8 +28,8 @@ public class BaseController {
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(Exception.class)
-	void handleOrderNotFound(Exception ex) {
-
+	public String handleOrderNotFound(Exception ex) {
+		return "something went wrong";
 	}
 
 }

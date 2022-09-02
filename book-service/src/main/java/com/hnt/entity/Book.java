@@ -22,30 +22,31 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int bookId;
-	
+
 	@NotBlank(message = "logo cannot be blank#######")
 	private String logo;
-	
+
 	@NotBlank(message = "title cannot be blank#######")
 	private String title;
-	
+
 	@NotBlank(message = "category cannot be blank#######")
 	private String category;
-	
+
 	@Min(value = 1, message = "price cannot be less than 1")
 	private int price;
-	
+
 	@ManyToOne
 	private Author author;
-	
+
 	@NotBlank(message = "publisher cannot be blank#######")
 	private String publisher;
-	
-	private String publishedDate;
-	
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate publishedDate;
+
 	@NotBlank(message = "content cannot be blank#######")
 	private String content;
-	
+
 	private boolean active;
 
 }

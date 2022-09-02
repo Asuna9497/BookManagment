@@ -35,11 +35,11 @@ public class BookController extends BaseController {
 	AuthorService authorService;
 
 	@GetMapping("/books/search")
-	List<Book> getBooks(HttpServletRequest req, HttpServletResponse res) {		
+	List<Book> getBooks(HttpServletRequest req, HttpServletResponse res) {
 		log.debug("inside getBooks");
 		String category = req.getParameter("category");
 		String authorName = req.getParameter("author");
-		int price = Integer.valueOf(req.getParameter("price"));
+		String priceParameter = req.getParameter("price");
 		String publisher = req.getParameter("publisher");
 
 		List<Book> bList = Streamable.of(bookService.getBooks()).toList();
@@ -47,11 +47,13 @@ public class BookController extends BaseController {
 
 		if (null != bList) {
 			sortedList = bList.stream()
-					.filter(b -> b.getCategory().equalsIgnoreCase(category) || b.getAuthor().getName().equalsIgnoreCase(authorName)
-							|| b.getPrice() == price || b.getPublisher().equalsIgnoreCase(publisher))
+					.filter(b -> b.getCategory().equalsIgnoreCase(category)
+							|| b.getAuthor().getName().equalsIgnoreCase(authorName)
+							|| (null != priceParameter && b.getPrice() == Integer.valueOf(priceParameter))
+							|| b.getPublisher().equalsIgnoreCase(publisher))
 					.collect(Collectors.toList());
 		}
-		
+
 		return sortedList;
 	}
 

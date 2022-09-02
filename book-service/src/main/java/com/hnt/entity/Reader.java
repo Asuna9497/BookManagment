@@ -21,5 +21,6 @@ public class Reader {
 
 	@Email
 	private String emailId;
+	
 		
 }
