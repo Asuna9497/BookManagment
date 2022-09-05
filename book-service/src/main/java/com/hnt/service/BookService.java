@@ -8,18 +8,33 @@ import com.hnt.entity.Book;
 
 @Service
 public class BookService {
-	
+
 	@Autowired
 	BookRepository bookRepository;
-		
-	public Iterable<Book> getBooks(){
-		return bookRepository.findAll();
+
+	/**
+	 * This method will fetch the all books
+	 * 
+	 * @return list of books
+	 */
+	public Iterable<Book> getBooks() {
+		Iterable<Book> books = bookRepository.findAll();
+		if (null != books) {
+			return books;
+
+		} else {
+			throw new IllegalArgumentException("No book found!");
+		}
 	}
-	
+
+	/**
+	 * This method will save the Book in DB
+	 * 
+	 * @param book
+	 * @return saved Book object
+	 */
 	public Book saveBook(Book book) {
 		return bookRepository.save(book);
 	}
 
-	
-	
 }

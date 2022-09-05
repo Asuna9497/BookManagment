@@ -8,13 +8,20 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * This is bean class for author
+ * 
+ * @author priyanka
+ *
+ */
+
 @Data
 @Entity
 public class Author {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int autherId;
+	private int id;
 
 	@NotBlank(message = "autherName cannot be blank#######")
 	private String name;

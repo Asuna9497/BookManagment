@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.hnt.entity.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
-	@Query("select author from Author author where author.autherId =?1")
+	@Query("select author from Author author where author.id =?1")
 	Author findById(int autherId);
 
 }
