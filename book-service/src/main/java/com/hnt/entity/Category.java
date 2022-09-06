@@ -1,5 +1,9 @@
 package com.hnt.entity;
-
+/**
+ * this is enum for category
+ * @author priyanka
+ *
+ */
 public enum Category {
 	Fantasy,
 	Science,

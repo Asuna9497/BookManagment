@@ -32,6 +32,15 @@ class AuthorServiceTest {
 		assertEquals(author, actualAuthor);
 	}
 	
-	
+	@Test
+	void testSaveAuthor() {
+		Author author = new Author();
+		author.setId(1);
+		author.setName("Ram");
+		
+		when(authorRepository.save(author)).thenReturn(author);
+		Author actualAuthor = authorService.saveAuthor(author);
+		assertEquals(author, actualAuthor);
+	}
 
 }

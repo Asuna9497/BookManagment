@@ -29,7 +29,7 @@ public class BaseController {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(Exception.class)
 	public String handleOrderNotFound(Exception ex) {
-		return ex.getMessage();
+		return "something went wrong";
 	}
 
 }

@@ -4,26 +4,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 
 /**
- * This is bean class for author
+ * This is bean class for PurchasedBook
  * 
  * @author priyanka
  *
  */
-
 @Data
 @Entity
-public class Author {
-
+public class PurchasedBook {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@NotBlank(message = "name cannot be blank#######")
-	private String name;
+	@Min(value = 1, message = "book id canot be less than 1")
+	private int bookId;
+
+	@ManyToOne
+	private Reader reader;
 
 }

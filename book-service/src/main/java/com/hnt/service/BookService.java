@@ -6,6 +6,12 @@ import org.springframework.stereotype.Service;
 import com.hnt.BookRepository;
 import com.hnt.entity.Book;
 
+/**
+ * This is BookService class which have methods to fetch books and save book
+ * 
+ * @author priyanka
+ *
+ */
 @Service
 public class BookService {
 

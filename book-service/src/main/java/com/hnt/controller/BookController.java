@@ -3,8 +3,6 @@ package com.hnt.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hnt.entity.Author;
 import com.hnt.entity.Book;
-import com.hnt.entity.Category;
+import com.hnt.entity.PurchasedBook;
+import com.hnt.entity.Reader;
 import com.hnt.service.AuthorService;
 import com.hnt.service.BookService;
+import com.hnt.service.PurchasedBookService;
+import com.hnt.service.ReaderService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,12 @@ public class BookController extends BaseController {
 
 	@Autowired
 	AuthorService authorService;
+	
+	@Autowired
+	PurchasedBookService purchasedBookService;
+	
+	@Autowired
+	ReaderService readerService;
 
 	/**
 	 * This method will first fetch the all the books from database then will sort
@@ -93,6 +100,24 @@ public class BookController extends BaseController {
 		} else {
 			throw new Exception("Author not found!!");
 		}
+	}
+	
+	/**
+	 * This method will - 1. save reader
+	 * 2. then will set reader in purchasedBook and
+	 * 3. will save purchased book into database
+	 * @param purchasedBook
+	 * @return id
+	 */
+	@PostMapping("/books/buy")
+	Integer SavePurchasedBook(@Valid @RequestBody PurchasedBook purchasedBook) {
+		Reader reader = purchasedBook.getReader();
+		if(null!= reader) {
+			log.debug("reader is not empty");
+			readerService.saveReader(reader);
+			purchasedBook.setReader(reader);
+		}
+		return purchasedBookService.savePurchasedBook(purchasedBook).getId();
 	}
 
 }
