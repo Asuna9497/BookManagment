@@ -54,10 +54,12 @@ public class BookController extends BaseController {
 	 * This method will first fetch the all the books from database then will sort
 	 * list according to search parameters
 	 * 
-	 * @param req
-	 * @param res
-	 * @return sorted list of book
-	 * @throws Exception
+	 * @param category
+	 * @param authorName
+	 * @param price
+	 * @param publisher
+	 * @return sortedList
+	 *
 	 */
 	@GetMapping("/books/search")
 	List<Book> getBooks(@RequestParam(value = "category", required = false) String category,
