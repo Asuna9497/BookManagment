@@ -43,10 +43,10 @@ public class BookController extends BaseController {
 
 	@Autowired
 	AuthorService authorService;
-	
+
 	@Autowired
 	PurchasedBookService purchasedBookService;
-	
+
 	@Autowired
 	ReaderService readerService;
 
@@ -63,7 +63,7 @@ public class BookController extends BaseController {
 	List<Book> getBooks(@RequestParam(value = "category", required = false) String category,
 			@RequestParam(value = "author", required = false) String authorName,
 			@RequestParam(value = "price", required = false) Float price,
-			@RequestParam(value = "publisher", required = false) String publisher){
+			@RequestParam(value = "publisher", required = false) String publisher) {
 		log.debug("inside getBooks");
 		List<Book> bookList = Streamable.of(bookService.getBooks()).toList();
 		List<Book> sortedList = null;
@@ -72,7 +72,7 @@ public class BookController extends BaseController {
 					.filter(b -> b.getCategory().toString().equalsIgnoreCase(category)
 							|| (null != authorName && null != b.getAuthor()
 									&& b.getAuthor().getName().equalsIgnoreCase(authorName))
-							|| (b.getPrice() == price) || b.getPublisher().equalsIgnoreCase(publisher))
+							|| (null != price && b.getPrice() == price) || b.getPublisher().equalsIgnoreCase(publisher))
 					.collect(Collectors.toList());
 		}
 
@@ -80,9 +80,7 @@ public class BookController extends BaseController {
 	}
 
 	/**
-	 * This method will - 
-	 * 1.find author by id 
-	 * 2.set this author in book object
+	 * This method will - 1.find author by id 2.set this author in book object
 	 * 3.save book object in database
 	 * 
 	 * @param book
@@ -101,18 +99,18 @@ public class BookController extends BaseController {
 			throw new Exception("Author not found!!");
 		}
 	}
-	
+
 	/**
-	 * This method will - 1. save reader
-	 * 2. then will set reader in purchasedBook and
-	 * 3. will save purchased book into database
+	 * This method will - 1. save reader 2. then will set reader in purchasedBook
+	 * and 3. will save purchased book into database
+	 * 
 	 * @param purchasedBook
 	 * @return id
 	 */
 	@PostMapping("/books/buy")
 	Integer SavePurchasedBook(@Valid @RequestBody PurchasedBook purchasedBook) {
 		Reader reader = purchasedBook.getReader();
-		if(null!= reader) {
+		if (null != reader) {
 			log.debug("reader is not empty");
 			readerService.saveReader(reader);
 			purchasedBook.setReader(reader);
