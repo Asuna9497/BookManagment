@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @ExtendWith(MockitoExtension.class)
 class BaseControllerTest {
@@ -20,12 +19,6 @@ class BaseControllerTest {
 
 	}
 	
-	void testHandleException() {
-		MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, null);
-		
-		baseController.handleException(ex);
-	}
-
 }
 
 

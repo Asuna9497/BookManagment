@@ -92,7 +92,18 @@ class BookControllerTest {
 		Iterable<Book> books = bookList;
 		when(bookService.getBooks()).thenReturn(books);
 		List<Book> actualBookList = bookController.getBooks("Biography", "Ram", 200f, "norton");
+		List<Book> actualBookList2 = bookController.getBooks("Biography", "Ram", null, "norton");
+		List<Book> actualBookList3 = bookController.getBooks("Biography", null , 500f, "manga");
 		assertEquals(books, actualBookList);
+		assertEquals(books, actualBookList2);
+		assertEquals(books, actualBookList3);
+		
+		List<Book> nullBookList = new ArrayList<>();
+		Iterable<Book> emptyBooksList = nullBookList;
+		when(bookService.getBooks()).thenReturn(emptyBooksList);
+		List<Book> actualBookList4 = bookController.getBooks("Biography", null , 500f, "manga");
+		assertEquals(emptyBooksList, actualBookList4);
+
 	}
 
 }
