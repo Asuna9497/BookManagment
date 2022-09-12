@@ -1,0 +1,47 @@
+package com.hnt.controller;
+
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.hnt.entity.Author;
+import com.hnt.entity.Book;
+import com.hnt.service.AuthorService;
+import com.hnt.service.BookService;
+
+@ExtendWith(MockitoExtension.class)
+public class BookControllerTest {
+	@Mock
+	BookService bookService;
+	
+	@Mock
+	AuthorService authorService;
+	
+	@InjectMocks
+	BookController bookController;
+	
+	@Test
+	void testGetBooks() {
+		
+	}
+	
+	@Test
+	void testSaveBook() {
+		Book book = new Book();
+		book.setBookId(1);
+		Author author = new Author();
+		author.setAutherId(1);
+		author.setName("Ram");
+		when(authorService.getAuthorById(1)).thenReturn(author);
+		when(bookService.saveBook(book)).thenReturn(book);
+		Integer savedBookId = bookController.saveBook(book, 1);
+		assertEquals(1, savedBookId);
+	}
+
+}

@@ -1,0 +1,12 @@
+<p>create book </p>
+<input [(ngModel)]='book.logo'/>
+<input [(ngModel)]='book.title'/>
+<input [(ngModel)]='book.category'/>
+<input [(ngModel)]='book.author.name'/>
+<input [(ngModel)]='book.publisher'/>
+<input [(ngModel)]='book.publishedDate' type='date'/>
+<input [(ngModel)]='book.content'/>
+<input [(ngModel)]='book.price' type='number'/>
+<input [(ngModel)]='book.active' type='checkbox'/>
+
+<button (click)='createBook()'> create</button>

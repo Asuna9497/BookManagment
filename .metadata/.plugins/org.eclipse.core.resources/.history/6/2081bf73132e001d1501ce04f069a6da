@@ -1,0 +1,13 @@
+package com.hnt;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.hnt.entity.PurchasedBook;
+
+public interface PurchasedBookRepository extends JpaRepository<PurchasedBook, Integer> {
+	@Query("select purchasedBook from PurchasedBook purchasedBook inner join purchasedBook.reader reader on purchasedBook.reader_id== reader.id where reader.email=?1")
+	List<PurchasedBook> findByEmail(String email);
+}

@@ -1,0 +1,34 @@
+package com.hnt.entity;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.StreamReadCapability;
+
+public enum Category {
+	Fantasy,
+	Science,
+	Fiction,
+	Dystopian,
+	Romance,
+	Detective,
+	Mystery,
+	Horror,
+	Thriller,
+	Historical,
+	Biography,
+	Cooking,
+	Inspirational,
+	Health;
+	
+	private String category;
+
+	public String getCategory() {
+		return category;
+	}
+	
+	@JsonValue
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+}

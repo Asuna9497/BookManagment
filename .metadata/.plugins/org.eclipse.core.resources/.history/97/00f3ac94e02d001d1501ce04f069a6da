@@ -1,0 +1,13 @@
+package com.hnt;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.hnt.entity.Reader;
+
+public interface ReaderRepository extends JpaRepository<Reader, Integer> {
+	
+	@Query("select reader from Reader reader where reader.email =?1")
+	Reader findById(String email);
+
+}

@@ -1,0 +1,12 @@
+package com.hnt.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hnt.PurchasedBookRepository;
+
+@Service
+public class PurchasedBookService {
+	@Autowired
+	PurchasedBookRepository purchasedBookRepository;
+}

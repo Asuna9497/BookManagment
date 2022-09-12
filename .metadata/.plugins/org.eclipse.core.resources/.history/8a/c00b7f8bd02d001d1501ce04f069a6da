@@ -1,0 +1,26 @@
+package com.hnt.controller;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.hnt.entity.Author;
+import com.hnt.service.AuthorService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+@RestController
+@RequestMapping("/api/v1/digitalbooks")
+public class AuthorController extends BaseController {
+	@Autowired
+	AuthorService authorService;
+	
+	@PostMapping("/author")
+	Integer saveAuthor( @Valid @RequestBody Author author) {
+		 return authorService.saveAuthor(author).getId();
+	}
+
+}
