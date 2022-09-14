@@ -1,20 +1,31 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { BookformComponent } from './bookform/bookform.component';
-import { HttpClientModule } from "@angular/common/http";
 
+import { HttpClientModule } from "@angular/common/http";
+import { RouterModule, Routes } from '@angular/router';
+import { SearchbookformComponent } from './searchbookform/searchbookform.component';
+import { CreatebookComponent } from './createbook/createbook.component';
+
+
+const routes: Routes = [
+  { path: 'searchbookform', component: SearchbookformComponent },
+  { path: 'createbook', component: CreatebookComponent },
+
+]
 @NgModule({
   declarations: [
     AppComponent,
-    BookformComponent
+    SearchbookformComponent,
+    CreatebookComponent
   ],
   imports: [
     BrowserModule, 
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
