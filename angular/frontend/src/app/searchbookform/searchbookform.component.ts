@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Book from '../entity/Book';
 import Author from '../entity/Author';
 import { BookService } from '../book.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-searchbookform',
@@ -18,8 +19,7 @@ export class SearchbookformComponent implements OnInit {
   book: Book = new Book("this is Science book", "Science.com", "eiusmod", "birds", this.selectedCategory, 600, this.author, this.todaysDate, true);
   books: any = [];
  
-
-  constructor(public bookService: BookService) { }
+  constructor(public bookService: BookService, private snack:MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +29,12 @@ export class SearchbookformComponent implements OnInit {
       this.book.price, this.book.publisher);
     observable.subscribe(books => {
       this.books = books;
+    },
+    (error)=>{
+      console.log(error)
+      this.snack.open('something went wrong!!', '', {
+        duration: 3000
+      });
     })
   }
 

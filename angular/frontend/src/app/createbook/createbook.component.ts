@@ -42,7 +42,7 @@ export class CreatebookComponent implements OnInit {
       });
       return;
     }
-    if(this.book.price==null || this.book.price>0){
+    if(this.book.price==null || this.book.price < 0){
       this.snack.open('price is required and should be greater than zero!!', '', {
         duration: 3000
       });
@@ -60,6 +60,12 @@ export class CreatebookComponent implements OnInit {
       });
       return;
     }
+    if(this.book.publishedDate==null){
+      this.snack.open('published Date is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
     //Ajax call 
     const observable = this.bookService.createBook(this.author.id, this.book);
     observable.subscribe((response) => {
@@ -68,7 +74,9 @@ export class CreatebookComponent implements OnInit {
     },
       (error) => { // error handler
         console.log(error)
-        this.snack.open('something went wrong!!','ok');
+        this.snack.open('something went wrong!!', '', {
+          duration: 3000
+        });
       }
     )
   }

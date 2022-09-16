@@ -55,12 +55,14 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.reloadPage();
+       // this.reloadPage();
         Swal.fire('successfully done!!', this.loginData.username+ ' is logged in successfully', 'success');
     },
     (error)=>{
       console.log(error)
-      this.snack.open('something went wrong!!','ok');
+      this.snack.open('something went wrong!!', '', {
+        duration: 3000
+      });
       this.isLoginFailed = true;
     })
   }
