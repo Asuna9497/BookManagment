@@ -17,4 +17,9 @@ export class BookService {
     return this.client.get(API_URL + "books/search?category=" + category + "&author=" + authorName +
       "&price=" + price + "&publisher=" + publisher);
   }
+
+  getPurchasedBooks(emailId: string){
+    return this.client.get(API_URL+ emailId +"/books");
+  }
+
 }

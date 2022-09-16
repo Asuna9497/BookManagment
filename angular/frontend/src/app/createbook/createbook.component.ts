@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Book from '../entity/Book';
 import Author from '../entity/Author';
 import { BookService } from '../book.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-createbook',
@@ -26,6 +27,7 @@ export class CreatebookComponent implements OnInit {
     const observable = this.bookService.createBook(this.author.id, this.book);
     observable.subscribe((response) => {
       console.log(response);
+      Swal.fire('successfully done!!', 'Book saved successfully', 'success');
     },
       (error) => { // error handler
         alert('Something went wrong');

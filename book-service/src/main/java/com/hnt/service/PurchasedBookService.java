@@ -2,11 +2,14 @@ package com.hnt.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hnt.BookRepository;
 import com.hnt.PurchasedBookRepository;
+import com.hnt.entity.Book;
 import com.hnt.entity.PurchasedBook;
 
 /**
@@ -20,6 +23,9 @@ import com.hnt.entity.PurchasedBook;
 public class PurchasedBookService {
 	@Autowired
 	PurchasedBookRepository purchasedBookRepository;
+	
+	@Autowired
+	BookRepository bookRepository;
 
 	/**
 	 * This method will save PurchasedBook in database
@@ -38,15 +44,16 @@ public class PurchasedBookService {
 	 * @param email
 	 * @return sorted list of purchased books
 	 */
-	public List<PurchasedBook> getPurchasedBook(String email) {
-		List<PurchasedBook> sortedList = new ArrayList<>();
-		Iterable<PurchasedBook> booklist = purchasedBookRepository.findAll();
-		for (PurchasedBook book : booklist) {
-			if (book.getReader().getEmail().equals(email)) {
+	public List<Book> getPurchasedBook(String email) {
+		List<Book> sortedList = new ArrayList<>();
+		List<PurchasedBook> booklist = purchasedBookRepository.findAll();
+		for (PurchasedBook purchasedBook : booklist) {
+			if (purchasedBook.getReader().getEmail().equals(email)) {
+				Optional<Book> books = bookRepository.findById(purchasedBook.getBookId());
+				Book book = books.get();
 				sortedList.add(book);
 			}
 		}
-
 		return sortedList;
 
 	}

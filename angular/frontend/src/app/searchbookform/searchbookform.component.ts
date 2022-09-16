@@ -11,11 +11,13 @@ import { BookService } from '../book.service';
 export class SearchbookformComponent implements OnInit {
   todaysDate: Date = new Date();
   author: Author = new Author(1, "Shashank");
-  book: Book = new Book("this is Science book", "Science.com", "eiusmod", "birds", "Science", 600, this.author, this.todaysDate, true);
-  books: any = [];
   categoryList: any = ['Fantasy', 'Science', 'Fiction', 'Dystopian', 'Romance', 'Detective',
   'Mystery', 'Horror', 'Thriller', 'Historical', 'Biography', 'Cooking', 'Inspirational',
   'Health'];
+  selectedCategory= '';
+  book: Book = new Book("this is Science book", "Science.com", "eiusmod", "birds", this.selectedCategory, 600, this.author, this.todaysDate, true);
+  books: any = [];
+ 
 
   constructor(public bookService: BookService) { }
 
@@ -23,7 +25,7 @@ export class SearchbookformComponent implements OnInit {
   }
 
   getBooks() {
-    const observable = this.bookService.getBook(this.book.category, this.book.author.name,
+    const observable = this.bookService.getBook(this.selectedCategory, this.book.author.name,
       this.book.price, this.book.publisher);
     observable.subscribe(books => {
       this.books = books;
