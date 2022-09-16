@@ -3,6 +3,7 @@ import Book from '../entity/Book';
 import Author from '../entity/Author';
 import { BookService } from '../book.service';
 import Swal from 'sweetalert2';
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-createbook',
@@ -17,12 +18,48 @@ export class CreatebookComponent implements OnInit {
     'Mystery', 'Horror', 'Thriller', 'Historical', 'Biography', 'Cooking', 'Inspirational',
     'Health'];
 
-  constructor(public bookService: BookService) { }
+  constructor(public bookService: BookService, private snack: MatSnackBar) { }
 
   ngOnInit(): void {
   }
   createBook() {
     console.log('inside createBook');
+    if(this.book.logo==null || this.book.logo==''){
+      this.snack.open('Logo is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if(this.book.category==null || this.book.category==''){
+      this.snack.open('category is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if(this.book.content==null || this.book.content==''){
+      this.snack.open('content is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if(this.book.price==null || this.book.price>0){
+      this.snack.open('price is required and should be greater than zero!!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if(this.book.publisher==null || this.book.publisher==''){
+      this.snack.open('publisher is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if(this.book.author.name==null || this.book.author.name==''){
+      this.snack.open('author is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
     //Ajax call 
     const observable = this.bookService.createBook(this.author.id, this.book);
     observable.subscribe((response) => {
@@ -30,7 +67,8 @@ export class CreatebookComponent implements OnInit {
       Swal.fire('successfully done!!', 'Book saved successfully', 'success');
     },
       (error) => { // error handler
-        alert('Something went wrong');
+        console.log(error)
+        this.snack.open('something went wrong!!','ok');
       }
     )
   }

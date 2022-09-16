@@ -5,35 +5,35 @@
     <table>
         <tr>
             <td>Logo</td>
-            <td><input [(ngModel)]='book.logo' /></td>
+            <td><input required name="logo"  [(ngModel)]='book.logo' /></td>
         </tr>
         <tr>
             <td>Title</td>
-            <td><input [(ngModel)]='book.title' /></td>
+            <td><input required name="title" [(ngModel)]='book.title' /></td>
         </tr>
         <tr>
             <td>Category</td>
-            <td><input [(ngModel)]='book.category' /></td>
+            <td><input required name="category" [(ngModel)]='book.category' /></td>
         </tr>
         <tr>
             <td>Author</td>
-            <td><input [(ngModel)]='book.author.name' /></td>
+            <td><input required name="author" [(ngModel)]='book.author.name' /></td>
         </tr>
         <tr>
             <td>Publisher</td>
-            <td><input [(ngModel)]='book.publisher' /></td>
+            <td><input required name="publisher" [(ngModel)]='book.publisher' /></td>
         </tr>
         <tr>
             <td>Published Date</td>
-            <td><input [(ngModel)]='book.publishedDate' type='date' /></td>
+            <td><input required name="publishedDate" [(ngModel)]='book.publishedDate' type='date' /></td>
         </tr>
         <tr>
             <td>Content</td>
-            <td><input [(ngModel)]='book.content' /></td>
+            <td><input required name="content" [(ngModel)]='book.content' /></td>
         </tr>
         <tr>
             <td>Price</td>
-            <td><input [(ngModel)]='book.price' type='number' /></td>
+            <td><input required name="price" [(ngModel)]='book.price' type='number' /></td>
         </tr>
         <tr>
             <td>Active</td>

@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(public userService: UserService, private snak:MatSnackBar) { }
+  constructor(public userService: UserService, private snack:MatSnackBar) { }
   public user = {
     username:'',
     email:'',
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   formSubmit(){
 
     if(this.user.username ==''||this.user.username == null){
-      this.snak.open('UserName is required !!','ok');
+      this.snack.open('UserName is required !!','ok');
       return;
     }
     this.userService.addUser(this.user).subscribe(
@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit {
       },
       (error)=>{
         console.log(error)
-        this.snak.open('something went wrong!!','ok');
+        this.snack.open('something went wrong!!','ok');
       }
     )
   }
