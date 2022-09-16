@@ -12,9 +12,9 @@ const httpOptions = {
 })
 export class UserService {
 
-  constructor(public client: HttpClient ) { }
+  constructor(public client: HttpClient) { }
 
-  public addUser(user:any){
+  public addUser(user: any) {
     return this.client.post(API_URL + "signup/", user);
   }
 

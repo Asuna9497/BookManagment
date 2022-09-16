@@ -3,7 +3,7 @@ import Book from '../entity/Book';
 import Author from '../entity/Author';
 import { BookService } from '../book.service';
 import Swal from 'sweetalert2';
-import { MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-createbook',
@@ -24,43 +24,43 @@ export class CreatebookComponent implements OnInit {
   }
   createBook() {
     console.log('inside createBook');
-    if(this.book.logo==null || this.book.logo==''){
+    if (this.book.logo == null || this.book.logo == '') {
       this.snack.open('Logo is required !!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.category==null || this.book.category==''){
+    if (this.book.category == null || this.book.category == '') {
       this.snack.open('category is required !!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.content==null || this.book.content==''){
+    if (this.book.content == null || this.book.content == '') {
       this.snack.open('content is required !!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.price==null || this.book.price < 0){
+    if (this.book.price == null || this.book.price < 0) {
       this.snack.open('price is required and should be greater than zero!!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.publisher==null || this.book.publisher==''){
+    if (this.book.publisher == null || this.book.publisher == '') {
       this.snack.open('publisher is required !!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.author.name==null || this.book.author.name==''){
+    if (this.book.author.name == null || this.book.author.name == '') {
       this.snack.open('author is required !!', '', {
         duration: 3000
       });
       return;
     }
-    if(this.book.publishedDate==null){
+    if (this.book.publishedDate == null) {
       this.snack.open('published Date is required !!', '', {
         duration: 3000
       });

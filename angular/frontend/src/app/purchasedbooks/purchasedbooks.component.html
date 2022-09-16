@@ -6,16 +6,13 @@
                 <form>
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>email</mat-label>
-                        <input 
-                        required
-                        [(ngModel)]="reader.email"
-                        name="email"
-                        matInput placeholder="enter here">
+                        <input required [(ngModel)]="reader.email" name="email" matInput placeholder="enter here">
                         <mat-hint>Enter valid email Id!</mat-hint>
-                      </mat-form-field>
-                      <div class="container text-center">
-                        <div align="right"><button (click)='getPurchasedBooks()' class="btn btn-primary"> search</button></div>
-                      </div>
+                    </mat-form-field>
+                    <div class="container text-center">
+                        <div align="right"><button (click)='getPurchasedBooks()' class="btn btn-primary">
+                                search</button></div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -52,4 +49,3 @@
 
 
 </div>
-

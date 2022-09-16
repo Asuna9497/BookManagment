@@ -9,16 +9,16 @@ import Reader from '../entity/Reader';
 })
 export class PurchasedbooksComponent implements OnInit {
 
-  reader: Reader = new Reader(5,'reader1','reader1.r@r.com');
-  constructor(public bookService:BookService) { }
-  purchasedBooks:any=[];
+  reader: Reader = new Reader(5, 'reader1', 'reader1.r@r.com');
+  constructor(public bookService: BookService) { }
+  purchasedBooks: any = [];
   ngOnInit(): void {
     this.getPurchasedBooks();
   }
 
- public getPurchasedBooks(){
+  public getPurchasedBooks() {
     const observable = this.bookService.getPurchasedBooks(this.reader.email);
-    observable.subscribe(purchasedBooks=>{
+    observable.subscribe(purchasedBooks => {
       this.purchasedBooks = purchasedBooks;
     })
   }

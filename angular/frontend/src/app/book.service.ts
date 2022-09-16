@@ -18,8 +18,8 @@ export class BookService {
       "&price=" + price + "&publisher=" + publisher);
   }
 
-  getPurchasedBooks(emailId: string){
-    return this.client.get(API_URL+ emailId +"/books");
+  getPurchasedBooks(emailId: string) {
+    return this.client.get(API_URL + emailId + "/books");
   }
 
 }

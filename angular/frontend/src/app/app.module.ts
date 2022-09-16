@@ -14,24 +14,24 @@ import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './pages/home/home.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { authInterceptorProviders } from './services/auth.interceptor';
 
 
 const routes: Routes = [
   { path: 'searchbookform', component: SearchbookformComponent },
   { path: 'createbook', component: CreatebookComponent },
-  { path:'purchasedbook', component: PurchasedbooksComponent},
-  { path:'signup', component:SignupComponent},
-  { path:'login', component:LoginComponent},
-  { path:'', component:HomeComponent}
+  { path: 'purchasedbook', component: PurchasedbooksComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent }
 
 ]
 @NgModule({
@@ -46,7 +46,7 @@ const routes: Routes = [
     HomeComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
