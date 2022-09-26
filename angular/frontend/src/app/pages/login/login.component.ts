@@ -3,6 +3,8 @@ import { UserService } from 'src/app/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import { TokenStorageServiceService } from 'src/app/services/token-storage-service.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,19 +17,12 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
-  roles: string[] = [];
-
-
-  constructor(public userService: UserService, private snack: MatSnackBar, private tokenStorage: TokenStorageServiceService) { }
+  constructor(public userService: UserService, public loginService: LoginService,
+    private snack: MatSnackBar, private tokenStorage: TokenStorageServiceService,
+    private router: Router) { }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
-    }
+
   }
 
   public formLogin() {
@@ -46,29 +41,28 @@ export class LoginComponent implements OnInit {
       });
       return;
     }
-    this.userService.login(username, password).subscribe(
+    this.loginService.login(username, password).subscribe(
       (data) => {
         console.log(data)
         this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
+        this.loginService.setUser(data);
+        if (this.loginService.getUserRole() == 'ROLE_READER') {
+          this.router.navigate(['reader'])
+        } else if (this.loginService.getUserRole() == 'ROLE_AUTHOR') {
+          this.router.navigate(['author'])
+        } else {
 
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().roles;
-        // this.reloadPage();
-        Swal.fire('successfully done!!', this.loginData.username + ' is logged in successfully', 'success');
+          this.loginService.logout();
+        }
+
       },
       (error) => {
         console.log(error)
-        this.snack.open('something went wrong!!', '', {
+        this.snack.open('Invalid details !! Try again', '', {
           duration: 3000
         });
-        this.isLoginFailed = true;
+        this.loginService.logout();
       })
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 
 }

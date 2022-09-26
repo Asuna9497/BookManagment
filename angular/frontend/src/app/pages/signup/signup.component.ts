@@ -23,13 +23,27 @@ export class SignupComponent implements OnInit {
   formSubmit() {
 
     if (this.user.username == '' || this.user.username == null) {
-      this.snack.open('UserName is required !!', 'ok');
+      this.snack.open('UserName is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if (this.user.password == '' || this.user.password == null) {
+      this.snack.open('password is required !!', '', {
+        duration: 3000
+      });
+      return;
+    }
+    if (this.user.email == '' || this.user.email == null) {
+      this.snack.open('email is required !!', '', {
+        duration: 3000
+      });
       return;
     }
     this.userService.addUser(this.user).subscribe(
       (data) => {
         console.log(data)
-        Swal.fire('successfully done!!', this.user.username + ' is registered successfully', 'success');
+        Swal.fire('successfully done!!', this.user.username + ' is registered successfully. Please login to proceed!', 'success');
       },
       (error) => {
         console.log(error)

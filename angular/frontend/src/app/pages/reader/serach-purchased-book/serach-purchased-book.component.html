@@ -1,0 +1,59 @@
+<div class="bootstrap-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <mat-card>
+                    <div>
+                        <div>
+                            <h1>Search Books </h1>
+                            <table>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><input [(ngModel)]='loginService.getUser().email' /></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <div><button (click)='getPurchasedBooks()' class="btn btn-primary">
+                                                search</button></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </mat-card>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr *ngIf="books?.length ">
+                                <th>Id</th>
+                                <th>Logo</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>PublishedDate</th>
+                                <th>Price</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let book of books'>
+                                <td>{{book.id}}</td>
+                                <td>{{book.logo}}</td>
+                                <td>{{book.title}}</td>
+                                <td>{{book.category}}</td>
+                                <td>{{book.author.username}}</td>
+                                <td>{{book.publisher}}</td>
+                                <td>{{book.publishedDate}}</td>
+                                <td>{{book.price}}</td>
+                                <td><input type="checkbox" [checked]="book.active"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

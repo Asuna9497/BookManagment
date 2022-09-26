@@ -41,7 +41,7 @@ public class Book {
 	private float price;
 	
 	@ManyToOne
-	private Author author;
+	private User author;
 
 	@NotBlank(message = "publisher cannot be blank#######")
 	private String publisher;

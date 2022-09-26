@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hnt.entity.Author;
+
 import com.hnt.entity.Book;
 import com.hnt.entity.PurchasedBook;
-import com.hnt.entity.Reader;
-import com.hnt.service.AuthorService;
+import com.hnt.entity.User;
 import com.hnt.service.BookService;
 import com.hnt.service.PurchasedBookService;
-import com.hnt.service.ReaderService;
+import com.hnt.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,20 +35,17 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/digitalbooks") // TODO: remove api/v1
+@RequestMapping("/api/v1/digitalbooks")
 public class BookController extends BaseController {
 
 	@Autowired
 	BookService bookService;
 
 	@Autowired
-	AuthorService authorService;
+	UserService userService;
 
 	@Autowired
 	PurchasedBookService purchasedBookService;
-
-	@Autowired
-	ReaderService readerService;
 
 	/**
 	 * This method will first fetch the all the books from database then will sort
@@ -74,7 +70,7 @@ public class BookController extends BaseController {
 			sortedList = bookList.stream()
 					.filter(b -> b.getCategory().toString().equalsIgnoreCase(category)
 							|| (null != authorName && null != b.getAuthor()
-									&& b.getAuthor().getName().equalsIgnoreCase(authorName))
+									&& b.getAuthor().getUsername().equalsIgnoreCase(authorName))
 							|| (null != price && b.getPrice() == price) || b.getPublisher().equalsIgnoreCase(publisher))
 					.collect(Collectors.toList());
 		}
@@ -93,9 +89,9 @@ public class BookController extends BaseController {
 	 */
 	@PostMapping("/author/{authorId}/books")
 	Integer saveBook(@Valid @RequestBody Book book, @PathVariable("authorId") int authorId) throws Exception {
-		Author author = authorService.getAuthorById(authorId);
-		if (null != author) {
-			book.setAuthor(author);
+		User user = userService.getUserById(authorId);
+		if (null != user) {
+			book.setAuthor(user);
 			bookService.saveBook(book);
 			return book.getId();
 		} else {
@@ -110,15 +106,44 @@ public class BookController extends BaseController {
 	 * @param purchasedBook
 	 * @return id
 	 */
-	@PostMapping("/books/buy")
-	Integer SavePurchasedBook(@Valid @RequestBody PurchasedBook purchasedBook) {
-		Reader reader = purchasedBook.getReader();
-		if (null != reader) {
-			log.debug("reader is not empty");
-			readerService.saveReader(reader);
-			purchasedBook.setReader(reader);
-		}
+	@PostMapping("/books/{userId}/buy")
+	Integer SavePurchasedBook(@Valid @RequestBody Book book, @PathVariable("userId") int userId ) {
+		PurchasedBook purchasedBook = new PurchasedBook();
+		purchasedBook.setBookId(book.getId());
+		User reader = userService.getUserById(userId);
+		purchasedBook.setReader(reader);
 		return purchasedBookService.savePurchasedBook(purchasedBook).getId();
 	}
+	
+	
+	/**
+	 * This method will fetch the purchased book according to the email passed
+	 * 
+	 * @param email
+	 * @return list of purchased book
+	 */
+	@GetMapping("/Readers/{emailId}/books")
+	public List<Book> getAllPurchasedBooks(@PathVariable("emailId") String email)throws Exception {
+		List<Book> books = purchasedBookService.getPurchasedBook(email);
+		if (null!= books) {
+			return books;
+		}else {
+			throw new Exception("books not found!!");
+		}
+		
+
+	}
+	
+	@GetMapping("/Readers/books")
+	public List<Book>getAllBooks() throws Exception {	
+		List<Book> books = (List<Book>) bookService.getBooks();
+		if (null!= books) {
+			return books;
+		}else {
+			throw new Exception("books not available!!");
+		}
+		
+	}
+
 
 }

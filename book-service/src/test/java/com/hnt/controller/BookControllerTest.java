@@ -13,11 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.hnt.entity.Author;
 import com.hnt.entity.Book;
 import com.hnt.entity.Category;
-import com.hnt.service.AuthorService;
+import com.hnt.entity.User;
 import com.hnt.service.BookService;
+import com.hnt.service.PurchasedBookService;
+import com.hnt.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class BookControllerTest {
@@ -26,7 +27,7 @@ class BookControllerTest {
 	BookService bookService;
 
 	@Mock
-	AuthorService authorService;
+	UserService userService;
 
 	@InjectMocks
 	BookController bookController;
@@ -34,9 +35,9 @@ class BookControllerTest {
 	@Test
 	void testSaveBook() throws Exception {
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Author author = new Author();
-		author.setId(1);
-		author.setName("Ram");
+		User author = new User();
+		author.setId(1l);
+		author.setUsername("Ram");
 		Book book = new Book();
 		book.setId(1);
 		book.setCategory(Category.Biography);
@@ -48,7 +49,7 @@ class BookControllerTest {
 		book.setTitle("Kirito");
 		book.setActive(true);
 		book.setAuthor(author);
-		when(authorService.getAuthorById(1)).thenReturn(author);
+		when(userService.getUserById(1l)).thenReturn(author);
 		when(bookService.saveBook(book)).thenReturn(book);
 		Integer savedBookId = bookController.saveBook(book, 1);
 		assertEquals(1, savedBookId);
@@ -58,9 +59,9 @@ class BookControllerTest {
 	void testGetBooks() {
 		List<Book> bookList = new ArrayList<>();
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Author author = new Author();
-		author.setId(1);
-		author.setName("Ram");
+		User author = new User();
+		author.setId(1l);
+		author.setUsername("Ram");
 
 		Book book1 = new Book();
 		book1.setId(1);
@@ -104,6 +105,37 @@ class BookControllerTest {
 		List<Book> actualBookList4 = bookController.getBooks("Biography", null , 500f, "manga");
 		assertEquals(emptyBooksList, actualBookList4);
 
+	}
+	
+	@Mock
+	PurchasedBookService purchasedBookService;
+
+
+	@Test
+	void testGetAllPurchasedBooks() {
+		List<Book> purchasedBookList = new ArrayList<>();
+		Book book = new Book();
+		LocalDateTime localDateTime = LocalDateTime.now();
+		User author = new User();
+		author.setId(1l);
+		author.setUsername("Neel");
+		book.setId(1);
+		book.setCategory(Category.Biography);
+		book.setContent("This is novel");
+		book.setLogo("novel.img");
+		book.setPrice(200);
+		book.setPublishedDate(localDateTime.toLocalDate());
+		book.setPublisher("manga");
+		book.setTitle("Kirito");
+		book.setActive(true);
+		book.setAuthor(author);
+		purchasedBookList.add(book);
+		when(purchasedBookService.getPurchasedBook("vaibhav.v@v.com")).thenReturn(purchasedBookList);
+		try {
+			assertEquals(purchasedBookList, bookController.getAllPurchasedBooks("vaibhav.v@v.com"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

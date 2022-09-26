@@ -17,11 +17,4 @@ export class UserService {
   public addUser(user: any) {
     return this.client.post(API_URL + "signup/", user);
   }
-
-  login(username: string, password: string): Observable<any> {
-    return this.client.post(API_URL + 'signin', {
-      username,
-      password
-    }, httpOptions);
-  }
 }

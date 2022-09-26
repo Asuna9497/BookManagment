@@ -14,9 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.hnt.BookRepository;
-import com.hnt.entity.Author;
 import com.hnt.entity.Book;
 import com.hnt.entity.Category;
+import com.hnt.entity.User;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
@@ -30,9 +30,9 @@ class BookServiceTest {
 	@Test
 	void testSaveBook() {
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Author author = new Author();
-		author.setId(1);
-		author.setName("Ram");
+		User author = new User();
+		author.setId(1l);
+		author.setUsername("Ram");
 
 		Book book = new Book();
 		book.setId(1);
@@ -54,9 +54,9 @@ class BookServiceTest {
 	void testGetBooks() {
 		List<Book> bookList = new ArrayList<>();
 		LocalDateTime localDateTime = LocalDateTime.now();
-		Author author = new Author();
-		author.setId(1);
-		author.setName("Ram");
+		User author = new User();
+		author.setId(1l);
+		author.setUsername("Ram");
 
 		Book book1 = new Book();
 		book1.setId(1);

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Book from './entity/Book';
 const API_URL = "http://localhost:8082/api/v1/digitalbooks/";
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ export class BookService {
 
   constructor(public client: HttpClient) { }
 
-  createBook(authorId: number, book: Book) {
+  createBook(authorId: number, book: any) {
     return this.client.post(API_URL + "author/" + authorId + "/books", book)
   }
 
@@ -19,7 +18,16 @@ export class BookService {
   }
 
   getPurchasedBooks(emailId: string) {
-    return this.client.get(API_URL + emailId + "/books");
+    return this.client.get(API_URL+"Readers/"+ emailId + "/books");
+  }
+
+  buyBook(purchasedBook: any, userId: number){
+    return this.client.post(API_URL + "books/"+ userId +"/buy/" , purchasedBook )
+
+  }
+  getAllBooks(){
+    console.log("inside get all books" );
+    return this.client.get(API_URL + "Readers/books");  
   }
 
 }

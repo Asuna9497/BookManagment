@@ -26,6 +26,6 @@ public class PurchasedBook {
 	private int bookId;
 
 	@ManyToOne
-	private Reader reader;
+	private User reader;
 
 }

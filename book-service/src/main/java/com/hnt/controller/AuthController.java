@@ -1,5 +1,6 @@
 package com.hnt.controller;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,7 @@ import com.hnt.payload.response.JwtResponse;
 import com.hnt.payload.response.MessageResponse;
 import com.hnt.security.jwt.JwtUtils;
 import com.hnt.security.jwt.services.UserDetailsImpl;
+import com.hnt.security.jwt.services.UserDetailsServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -47,6 +50,10 @@ public class AuthController {
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
+
 
 	@Autowired
 	JwtUtils jwtUtils;
